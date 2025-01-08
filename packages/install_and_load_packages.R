@@ -1,7 +1,7 @@
 # ------------------------------------------------------------------------------
 
 # use this in your script:
-# source("https://raw.githubusercontent.com/andrlb/Rfunctions/refs/heads/main/packages/install_and_load_packages.R")
+# source("https://raw.githubusercontent.com/andrlb/_myRtools/refs/heads/main/packages/install_and_load_packages.R")
 
 # Example usage:
 # install_and_load_packages("dplyr", "ggplot2")
