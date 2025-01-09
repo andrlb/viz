@@ -17,10 +17,10 @@ setwd(folder)
 # ------------------------------------------------------------------------------
 
 # Get the ISO 3166 country codes
-country_codes <- ISO_3166_1
+countries <- ISO_3166_1
 
 # View the first few rows of the country codes data frame
-head(country_codes)
+head(countries)
 
 # ------------------------------------------------------------------------------
 
@@ -35,22 +35,22 @@ table_rows <- webpage %>%
   html_nodes("table tr")
 
 # Extract the text from each row
-countries <- table_rows %>%
+countries1 <- table_rows %>%
   html_nodes("td") %>%
   html_text(trim = TRUE)
 
 # Clean and format the country names
-countries <- matrix(countries, ncol = 4, byrow = TRUE) %>%
+countries1 <- matrix(countries1, ncol = 4, byrow = TRUE) %>%
   as.data.frame(stringsAsFactors = FALSE)
 
 # Assign column names from the first row and remove the first row
-colnames(countries) <- countries[1, ]
-countries <- countries[-1, ]
+colnames(countries1) <- countries1[1, ]
+countries1 <- countries1[-1, ]
 
-colnames(countries)
+colnames(countries1)
 
 # Remove rows with NA values and rows with empty strings
-countries2 <- countries %>% drop_na() %>% filter_all(all_vars(. != "")) %>%
+countries12 <- countries1 %>% drop_na() %>% filter_all(all_vars(. != "")) %>%
   rename(
     Country_EN = "Country",
     Country_PT = "Country (Portuguese)",
@@ -62,27 +62,27 @@ countries2 <- countries %>% drop_na() %>% filter_all(all_vars(. != "")) %>%
 # ------------------------------------------------------------------------------
 
 # Create a dataframe mapping Alpha-3 codes to English country names (for merging)
-country_code_map <- country_codes %>%
+country_code_map <- countries %>%
   select(Alpha_3, Name) %>%
   setNames(c("Alpha_3", "Country_EN"))
 
-# Merge the countries dataframe with the country_code_map
-country_codes_translated <- country_code_map %>%
-  left_join(countries2, by = "Country_EN")
+# Merge the countries1 dataframe with the country_code_map
+countries_translated <- country_code_map %>%
+  left_join(countries12, by = "Country_EN")
 
-# Add the Country_Portuguese column to the original country_codes dataframe
-country_codes <- country_codes %>%
-  left_join(country_codes_translated %>% 
-              select(colnames(country_codes_translated)), by = "Alpha_3")
+# Add the Country_Portuguese column to the original countries dataframe
+countries <- countries %>%
+  left_join(countries_translated %>% 
+              select(colnames(countries_translated)), by = "Alpha_3")
 
-# View the first few rows of the updated country_codes dataframe
-head(country_codes)
+# View the first few rows of the updated countries dataframe
+head(countries)
 
 # ------------------------------------------------------------------------------
 
-countries_PT = country_codes %>% filter(is.na(Country_PT))
+countries1_PT = countries %>% filter(is.na(Country_PT))
 
-glimpse(countries_PT)
+glimpse(countries1_PT)
 
 # Define the translations
 # translations <- c(
@@ -134,67 +134,38 @@ translations <- c(
 )
 
 # Add the translations to the dataframe
-countries_PT$Country_PT <- translations
+countries1_PT$Country_PT <- translations
 
 # View the updated dataframe
-head(countries_PT)
+head(countries1_PT)
 
 # ------------------------------------------------------------------------------
 
-# Merge the updated dataframe with country_codes 
-country_codes <- country_codes %>% 
-  left_join(countries_PT %>% select(Alpha_3, Country_PT), by = "Alpha_3") %>% 
+# Merge the updated dataframe with countries 
+countries <- countries %>% 
+  left_join(countries1_PT %>% select(Alpha_3, Country_PT), by = "Alpha_3") %>% 
   mutate(Country_PT = coalesce(Country_PT.x, Country_PT.y)) %>% 
   select(-Country_PT.x, -Country_PT.y)
 
-# View the first few rows of the updated country_codes dataframe
-colnames(country_codes)
+# View the first few rows of the updated countries dataframe
+colnames(countries)
 
-country_codes <- country_codes %>%
+countries <- countries %>%
   select(Alpha_2, Alpha_3, Numeric, Country_EN, Country_PT, everything())
 
 # Visualize as primeiras linhas do dataframe reordenado
-head(country_codes)
+head(countries)
 
 # ------------------------------------------------------------------------------
 
-save(country_codes, 
-     file = file.path(folder, "country_codes.rdata")
+save(countries, 
+     file = file.path(folder, "countries1.rdata")
        )
 
 load(
-  file.path(folder, "country_codes.rdata")
+  file.path(folder, "countries1.rdata")
   )
 
+View(countries)
+
 # ------------------------------------------------------------------------------
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
