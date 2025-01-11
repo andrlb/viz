@@ -1,3 +1,0 @@
-"0",""
-"0","# Save the plot as a PNG file"
-"0","ggsave(""cores.png"", plot = p, width = 10, height = 10, dpi = 300)"

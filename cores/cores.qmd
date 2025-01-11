@@ -50,6 +50,7 @@ cores <- list(
   "bb.rosa.escuro"  = "#FF6E91",
   "bb.azul.claro"   = "#54DCFC",
   "bb.amarelo.claro"= "#FFF7B5",
+  "branco"          = "#FFFFFF",
   
   # paleta BB estilo
   "bb.estilo.AzulSofisticação" = "#0F2846",
@@ -59,10 +60,10 @@ cores <- list(
   
   
   # cinzas
-  "branco"          = "#FFFFFF",
   "preto"           = "#000000",
   "cinza.claro"     = "#E5E5E5",
   "cinza.azulado"   = "#99ABB7",
+  "grey25"          = "#404040", 
   "grey80"          = "#CCCCCC", 
   "grey60"          = "#999999", 
   "grey40"          = "#666666", 

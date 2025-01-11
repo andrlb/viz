@@ -1,4 +1,0 @@
-"0",""
-"0","# Save the plot as a PDF file"
-"0","ggsave(""cores.pdf"", plot = p, width = 10, height = 10, device = ""pdf"")"
-"0",""
