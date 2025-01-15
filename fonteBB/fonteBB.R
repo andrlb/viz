@@ -1,4 +1,7 @@
-# fonte bb:
+# ------------------------------------------------------------------------------
+# FONTE BB
+# ------------------------------------------------------------------------------
+
 if (!require("extrafont")) {
   install.packages("extrafont", method = "wininet")
 }
@@ -15,6 +18,10 @@ if (!"BancoDoBrasil Textos" %in% fonts()) {
 # Fallback to Calibri if BancoDoBrasil Textos is still not found
 if (!"BancoDoBrasil Textos" %in% fonts()) {
   windowsFonts(BancoDoBrasil = windowsFont("Calibri"))
+  custom_font <- "Calibri"
 } else {
   windowsFonts(BancoDoBrasil = windowsFont("BancoDoBrasil Textos"))
+  custom_font <- "BancoDoBrasil Textos"
 }
+
+# ------------------------------------------------------------------------------
