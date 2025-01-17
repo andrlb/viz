@@ -24,23 +24,6 @@ install_and_load_packages <- function(...) {
 }
 
 # ------------------------------------------------------------------------------
-  
-# Define a function to install and update packages
-# install_and_load_packages <- function(...) {
-#   packages <- c(...)
-#     
-#     for (pkg in packages) {
-#       if (!require(pkg, character.only = TRUE)) {
-#         install.packages(pkg, method = "wininet")
-#         library(pkg, character.only = TRUE)
-#       } 
-#     } 
-#     message(
-#       " Example usage:\n install_and_load_packages(\"dplyr\", \"ggplot2\") \n All packages installed and loaded."
-#     )
-#   }  
-  
-# ------------------------------------------------------------------------------
 
 # packages = c(
 #   # Data Manipulation and Analysis
