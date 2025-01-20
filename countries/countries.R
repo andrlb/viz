@@ -2,7 +2,14 @@
 # PACKAGES ---------------------------------------------------------------------
 
 packages <- c(
-  "beepr", "rvest", "tidyverse", "readxl", "writexl", "ISOcodes", "stringr"
+  "conflicted",
+  "beepr", 
+  "rvest", 
+  "tidyverse", 
+  "readxl", 
+  "writexl", 
+  "ISOcodes", 
+  "stringr"
 )
 
 for (pkg in packages) {
@@ -11,6 +18,8 @@ for (pkg in packages) {
   }
   library(pkg, character.only = TRUE)
 }
+
+conflicts_prefer(dplyr::filter)
 
 # ------------------------------------------------------------------------------
 
@@ -80,7 +89,7 @@ countries <- countries %>%
               select(colnames(countries_translated)), by = "Alpha_3")
 
 # View the first few rows of the updated countries dataframe
-head(countries)
+View(countries)
 
 # ------------------------------------------------------------------------------
 
@@ -162,11 +171,14 @@ countries <- countries %>%
 # Visualize as primeiras linhas do dataframe reordenado
 head(countries)
 
+# codes to numeric:
+countries$num = as.numeric(countries$Numeric)
+
 # ------------------------------------------------------------------------------
 
 write_xlsx(countries, path = "countries.xlsx")
 
-save(countries, "countries.rdata")
+save(countries, file = "countries.rdata")
 
 load("countries.rdata")
 
