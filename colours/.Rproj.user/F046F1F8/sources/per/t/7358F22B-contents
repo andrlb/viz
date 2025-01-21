@@ -1,0 +1,77 @@
+# Load necessary libraries
+library(grDevices)
+library(tidyverse)
+library(openxlsx)
+library(gridExtra)
+library(grid)
+
+# Function to create the Excel and PDF files with dynamic column groups and separator columns
+generate_files <- function(num_groups) {
+  
+  # Get the HEX codes for the colour names
+  colour_names <- colours()
+  
+  # Create a named list where the name is the colour name and the content is the HEX code
+  colour_list <- setNames(lapply(colour_names, function(colour) rgb(t(col2rgb(colour))/255)), colour_names)
+  
+  # Convert the list to a data frame
+  colour_df <- data.frame(colourName = names(colour_list), HexCode = unlist(colour_list), stringsAsFactors = FALSE)
+  
+  # Reset the row names
+  rownames(colour_df) <- NULL
+  
+  # Determine the size of each group
+  total_colors <- nrow(colour_df)
+  group_size <- ceiling(total_colors / num_groups)
+  
+  # Create a workbook and add a worksheet
+  wb <- createWorkbook()
+  addWorksheet(wb, "colours")
+  
+  # Define a list to store the colors for each group
+  color_groups <- list()
+  
+  # Function to calculate text color based on background color
+  get_text_color <- function(bg_color) {
+    rgb_val <- col2rgb(bg_color)
+    brightness <- (0.299 * rgb_val[1] + 0.587 * rgb_val[2] + 0.114 * rgb_val[3]) / 255
+    if (brightness > 0.5) {
+      return("black")
+    } else {
+      return("white")
+    }
+  }
+  
+  # Write the dataframes to the worksheet in the specified number of groups with separator columns
+  for (i in 1:num_groups) {
+    start_row <- (i - 1) * group_size + 1
+    end_row <- min(i * group_size, total_colors)
+    group <- colour_df[start_row:end_row, ]
+    
+    start_col <- (i - 1) * 3 + 1
+    writeData(wb, sheet = "colours", x = group, startCol = start_col)
+    
+    color_groups[[i]] <- colour_df$HexCode[start_row:end_row]
+    
+    # Apply the colours to the 'colourName' and 'HexCode' columns for the group
+    for (j in 1:nrow(group)) {
+      bg_color <- colour_df$HexCode[start_row + j - 1]
+      text_color <- get_text_color(bg_color)
+      cell_style <- createStyle(fgFill = bg_color, fontColour = text_color)
+      addStyle(wb, sheet = "colours", style = cell_style, rows = j + 1, cols = start_col)
+      addStyle(wb, sheet = "colours", style = cell_style, rows = j + 1, cols = start_col + 1)
+    }
+    
+    # Set the width of the separator column
+    setColWidths(wb, sheet = "colours", cols = start_col + 2, widths = 2)
+  }
+  
+  # Save the workbook
+  saveWorkbook(wb, file = "Rcolours.xlsx", overwrite = TRUE)
+  
+  # Save the colour data frame as an RData file
+  save(colour_df, file = "colour_data.RData")
+}
+
+# Example usage: Generate files with n groups of columns
+generate_files(4)

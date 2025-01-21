@@ -1,4 +1,3 @@
-
 # PACKAGES ---------------------------------------------------------------------
 
 packages <- c('grid', 'ggplot2', 'beepr')
@@ -12,25 +11,24 @@ for (pkg in packages) {
 
 # COLOURS ----------------------------------------------------------------------
 
-# Define colors
-paletaBB <- c(
-  "#FCFC30",
-  "#FFF7B5",
-  "#3333BD",
-  "#465EFF",
-  "#735CC6",
-  "#BDB6FF",
-  "#00EBD0",
-  "#83FFEA",
-  "#FF6E91",
-  "#FFA7D3",
-  "#54DCFC",
-  "#FFFFFF",
-  "#0F2846",
-  "#404040",
-  "#467DC3",
-  "#D7D2CD"
-  
+# Define colors as a list
+paletaBB <- list(
+  "bb-amarelo"      = "#FCFC30",
+  "bb-amarelo-claro"= "#FFF7B5",
+  "bb-azul-escuro"  = "#3333BD",
+  "bb-azul"         = "#465EFF",
+  "bb-roxo-escuro"  = "#735CC6",
+  "bb-roxo-claro"   = "#BDB6FF",
+  "bb-verde-escuro" = "#00EBD0",  
+  "bb-verde-claro"  = "#83FFEA",
+  "bb-rosa-escuro"  = "#FF6E91",
+  "bb-rosa-claro"   = "#FFA7D3",
+  "bb-azul-claro"   = "#54DCFC",
+  "branco"          = "#FFFFFF",
+  "bb-estilo-azulS"   = "#0F2846",
+  "bb-estilo-azulE"   = "#467DC3",
+  "bb-estilo-areiaT"  = "#D7D2CD",
+  "bb-estilo-amarelo" = "#FCFC30"
 )
 
 # PARAMETERS -------------------------------------------------------------------
@@ -38,13 +36,13 @@ paletaBB <- c(
 # Define the size of the squares
 square_size <- 0.40
 columns = 2
-rows = length(paletaBB)/2
+rows = length(paletaBB) / 2
 
 # Create a data frame for the squares with the correct order
 df <- data.frame(
   x = rep(1:columns, times=rows),
   y = rep(rev(1:rows), each=columns),
-  fill = paletaBB
+  fill = unlist(paletaBB)
 )
 
 # PLOT -------------------------------------------------------------------------
@@ -70,4 +68,4 @@ ggsave("paletaBB.png", p, width = 2, height = 6, bg = "transparent")
 # END --------------------------------------------------------------------------
 
 # Play the "coin" sound
-beep(sound = "coin")
+# beep(sound = "coin")
