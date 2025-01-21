@@ -1,4 +1,3 @@
-
 # PACKAGES ---------------------------------------------------------------------
 
 packages <- c(
@@ -9,7 +8,8 @@ packages <- c(
   "readxl", 
   "writexl", 
   "ISOcodes", 
-  "stringr"
+  "stringr",
+  "countries"
 )
 
 for (pkg in packages) {
@@ -20,12 +20,6 @@ for (pkg in packages) {
 }
 
 conflicts_prefer(dplyr::filter)
-
-# ------------------------------------------------------------------------------
-
-# folder = "C:/Users/F0738707/OneDrive - Banco do Brasil S.A/_myRtools/countries"
-# 
-# setwd(folder)
 
 # ------------------------------------------------------------------------------
 

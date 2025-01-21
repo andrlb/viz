@@ -1,9 +1,23 @@
-# Load necessary libraries
-library(grDevices)
-library(tidyverse)
-library(openxlsx)
-library(gridExtra)
-library(grid)
+# PACKAGES ---------------------------------------------------------------------
+
+packages <- c(
+  "grDevices",
+  "tidyverse",
+  "openxlsx",
+  "gridExtra",
+  "grid"
+)
+
+for (pkg in packages) {
+  if (!require(pkg, character.only = TRUE)) {
+    install.packages(pkg, method = "wininet")
+  }
+  library(pkg, character.only = TRUE)
+}
+
+# ------------------------------------------------------------------------------
+
+number_of_columns = 10
 
 # Function to create the Excel and PDF files with dynamic column groups and separator columns
 generate_files <- function(num_groups) {
@@ -70,8 +84,8 @@ generate_files <- function(num_groups) {
   saveWorkbook(wb, file = "Rcolours.xlsx", overwrite = TRUE)
   
   # Save the colour data frame as an RData file
-  save(colour_df, file = "colour_data.RData")
+  save(colour_df, file = "Rcolours.RData")
 }
 
 # Example usage: Generate files with n groups of columns
-generate_files(4)
+generate_files(number_of_columns)

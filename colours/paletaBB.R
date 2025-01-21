@@ -65,6 +65,8 @@ p <- ggplot(df, aes(x = x, y = y, fill = fill)) +
 # Save to a PNG file with transparent background
 ggsave("paletaBB.png", p, width = 2, height = 6, bg = "transparent")
 
+plot(p)
+
 # END --------------------------------------------------------------------------
 
 # Play the "coin" sound

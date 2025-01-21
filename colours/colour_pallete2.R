@@ -11,7 +11,8 @@ base_colors <- c(
   "#0F2846",  # bb-estilo-azulS
   "#467DC3",  # bb-estilo-azulE
   "#D7D2CD"   # bb-estilo-areiaT
-)
+
+  )
   
   # "#FCFC30",  # bb-amarelo
   # "#3333BD",  # bb-azul-escuro

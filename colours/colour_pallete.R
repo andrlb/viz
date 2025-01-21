@@ -3,13 +3,12 @@ library(grDevices)
 library(ggplot2)
 
 # pallete name:
-pallete_name = "paletaBB"
+pallete_name = "pallete_1"
 
 # Define your base colors
-base_colors <- teste
-  c("#FF5733", "#33FF57", "#3357FF") # Replace with your colors
+base_colors <- c("#FF5733", "#33FF57", "#3357FF") # Replace with your colors
 
-l = length(base_colors)
+l = length(base_colors) * 3
     
 # Create a function to generate a palette
 generate_palette <- function(colors, l) {
