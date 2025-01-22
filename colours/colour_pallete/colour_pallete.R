@@ -3,35 +3,28 @@ library(grDevices)
 library(ggplot2)
 
 # pallete name:
-pallete_name = "paleta_BB_estilo"
+pallete_name = "pallete_1"
 
 # Define your base colors
 base_colors <- c(
+
+  "#FCFC30",
+  "#FFF7B5",
+  "#3333BD",
+  "#465EFF",
+  "#735CC6",
+  "#BDB6FF",
+  "#00EBD0",  
+  "#83FFEA",
+  "#FF6E91",
+  "#FFA7D3",
+  "#54DCFC",
+  "#FFFFFF"
   
-  "#0F2846",  # bb-estilo-azulS
-  "#467DC3",  # bb-estilo-azulE
-  "#D7D2CD"   # bb-estilo-areiaT
+)
 
-  )
-  
-  # "#FCFC30",  # bb-amarelo
-  # "#3333BD",  # bb-azul-escuro
-  # "#465EFF",  # bb-azul
-  # "#735CC6",  # bb-roxo-escuro
-  # "#BDB6FF",  # bb-roxo-claro
-  # "#00EBD0",  # bb-verde-escuro
-  # "#83FFEA",  # bb-verde-claro
-  # "#FF6E91",  # bb-rosa-escuro
-  # "#FFA7D3",  # bb-rosa-claro
-  # "#54DCFC",  # bb-azul-claro
-  # "#FFFFFF",  # branco
-  # "#0F2846",  # bb-estilo-azulS
-  # "#467DC3",  # bb-estilo-azulE
-  # "#D7D2CD"   # bb-estilo-areiaT
-
-
-
-l = length(base_colors) *3
+# choose the length of the pallete
+l = length(base_colors) * 3
 
 # Create a function to generate a palette
 generate_palette <- function(colors, l) {
@@ -74,7 +67,8 @@ p_x <- ggplot(palette_df, aes(x = Color, y = 1, fill = Hex)) +
     axis.title.x = element_blank(),  # Remove x-axis title
     axis.title.y = element_blank()   # Remove y-axis title
   ) +
-  geom_text(aes(label = Hex, color = LabelColor), vjust = 0.5, hjust = 0.5, angle = 90) +
+  geom_text(aes(label = Hex, color = LabelColor), vjust = 0.5, hjust = 0.5, 
+            size = 3, angle = 90) +
   scale_color_identity()
 
 # Reverse the order of the palette and label colors for the p_y plot
@@ -103,7 +97,7 @@ p_y <- ggplot(palette_df_reversed, aes(x = 1, y = Color, fill = Hex)) +
     axis.title.y = element_blank()   # Remove y-axis title
   ) +
   geom_text(aes(label = Hex, color = LabelColor), 
-            vjust = 0.5, hjust = 0.5, size = 3.5) +
+            vjust = 0.5, hjust = 0.5, size = 3) +
   scale_color_identity()
 
 width_p_x = 8
@@ -133,3 +127,4 @@ ggsave(
   plot = p_y, width = width_p_y, height = height_p_y, units = "in")
 
 plot(p_y)
+plot(p_x)

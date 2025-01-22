@@ -29,13 +29,13 @@ generate_files <- function(num_groups) {
   colour_list <- setNames(lapply(colour_names, function(colour) rgb(t(col2rgb(colour))/255)), colour_names)
   
   # Convert the list to a data frame
-  colour_df <- data.frame(colourName = names(colour_list), HexCode = unlist(colour_list), stringsAsFactors = FALSE)
+  Rcolours <- data.frame(colourName = names(colour_list), HexCode = unlist(colour_list), stringsAsFactors = FALSE)
   
   # Reset the row names
-  rownames(colour_df) <- NULL
+  rownames(Rcolours) <- NULL
   
   # Determine the size of each group
-  total_colors <- nrow(colour_df)
+  total_colors <- nrow(Rcolours)
   group_size <- ceiling(total_colors / num_groups)
   
   # Create a workbook and add a worksheet
@@ -60,16 +60,16 @@ generate_files <- function(num_groups) {
   for (i in 1:num_groups) {
     start_row <- (i - 1) * group_size + 1
     end_row <- min(i * group_size, total_colors)
-    group <- colour_df[start_row:end_row, ]
+    group <- Rcolours[start_row:end_row, ]
     
     start_col <- (i - 1) * 3 + 1
     writeData(wb, sheet = "colours", x = group, startCol = start_col)
     
-    color_groups[[i]] <- colour_df$HexCode[start_row:end_row]
+    color_groups[[i]] <- Rcolours$HexCode[start_row:end_row]
     
     # Apply the colours to the 'colourName' and 'HexCode' columns for the group
     for (j in 1:nrow(group)) {
-      bg_color <- colour_df$HexCode[start_row + j - 1]
+      bg_color <- Rcolours$HexCode[start_row + j - 1]
       text_color <- get_text_color(bg_color)
       cell_style <- createStyle(fgFill = bg_color, fontColour = text_color)
       addStyle(wb, sheet = "colours", style = cell_style, rows = j + 1, cols = start_col)
@@ -84,7 +84,7 @@ generate_files <- function(num_groups) {
   saveWorkbook(wb, file = "Rcolours.xlsx", overwrite = TRUE)
   
   # Save the colour data frame as an RData file
-  save(colour_df, file = "Rcolours.RData")
+  save(Rcolours, file = "Rcolours.RData")
 }
 
 # Example usage: Generate files with n groups of columns
